@@ -12,11 +12,11 @@ Renderer::Renderer(Window &window, int width, int height)
   SDL_PropertiesID props = SDL_GetWindowProperties(window.native());
   bgfx::PlatformData pd{};
 
-#if defined(SDL_PLATFORM_WIN32)
+#if BX_PLATFORM_WINDOW
   pd.nwh = SDL_GetPointerProperty(props, SDL_PROP_WINDOW_WIN32_HWND_POINTER,
                                   nullptr);
   pd.type = bgfx::NativeWindowHandleType::Default;
-#elif defined(SDL_PLATFORM_MACOS)
+#elif BX_PLATFORM_OSX
   pd.nwh = SDL_GetPointerProperty(props, SDL_PROP_WINDOW_COCOA_WINDOW_POINTER,
                                   nullptr);
   pd.type = bgfx::NativeWindowHandleType::Default;

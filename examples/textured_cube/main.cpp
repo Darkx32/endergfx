@@ -1,4 +1,7 @@
+#include "endergfx/Material.hpp"
+#include "endergfx/Mesh.hpp"
 #include <endergfx/endergfx.hpp>
+#include <memory>
 #include <vector>
 
 int main() {
@@ -57,11 +60,11 @@ int main() {
       12, 13, 14, 13, 15, 14, 16, 17, 18, 17, 19, 18, 20, 21, 22, 22, 21, 23,
   };
 
-  endergfx::Mesh cubeMesh(vertices, indices);
+  auto cubeMesh = std::make_shared<endergfx::Mesh>(vertices, indices);
 
   std::string basePath = endergfx::PathUtils::getExecutableDir();
   endergfx::Texture texture(basePath + "assets/dirt.png");
-  endergfx::Material material(std::move(texture));
+  auto material = std::make_shared<endergfx::Material>(std::move(texture));
   endergfx::Model cube(cubeMesh, material);
 
   float angle = 0.0f;

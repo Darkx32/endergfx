@@ -8,7 +8,7 @@ namespace endergfx {
 
 class Renderer {
 public:
-  Renderer(Window &window, int width, int height);
+  Renderer(Window &window, unsigned int width, unsigned int height);
   ~Renderer();
 
   void beginFrame();
@@ -20,8 +20,8 @@ public:
   bool isValid() const { return this->m_valid; }
 
 private:
-  int m_width;
-  int m_height;
+  unsigned int m_width;
+  unsigned int m_height;
   bool m_valid = false;
 };
 

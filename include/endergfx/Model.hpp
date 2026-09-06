@@ -2,14 +2,15 @@
 #include "endergfx/Material.hpp"
 #include "endergfx/Mesh.hpp"
 #include <bgfx/bgfx.h>
+#include <memory>
 
 namespace endergfx {
 
 class Model {
 public:
-  explicit Model(const Mesh &mesh);
-  Model(const Mesh &mesh, const Material &material);
-  Model(const Mesh &mesh, const Material &material,
+  explicit Model(std::shared_ptr<Mesh> mesh);
+  Model(std::shared_ptr<Mesh> mesh, std::shared_ptr<Material> material);
+  Model(std::shared_ptr<Mesh> mesh, std::shared_ptr<Material> material,
         bgfx::ProgramHandle program);
 
   ~Model();
@@ -24,8 +25,8 @@ public:
   void draw(bgfx::ViewId view) const;
 
 private:
-  const Mesh &m_mesh;
-  const Material *m_material;
+  std::shared_ptr<Mesh> m_mesh;
+  std::shared_ptr<Material> m_material;
   bgfx::ProgramHandle m_program;
   bool m_ownsProgram;
 

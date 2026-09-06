@@ -8,8 +8,8 @@
 #include "spirv/model_vs.sc.bin.h"
 #include <bx/platform.h>
 #if BX_PLATFORM_WINDOWS
-#include "dx11/model_fs.sc.bin.h"
-#include "dx11/model_vs.sc.bin.h"
+#include "dxbc/model_fs.sc.bin.h"
+#include "dxbc/model_vs.sc.bin.h"
 #elif BX_PLATFORM_OSX
 #include "metal/model_fs.sc.bin.h"
 #include "metal/model_vs.sc.bin.h"
@@ -25,7 +25,7 @@ createShaderForCurrentRenderer(const uint8_t *glsl, uint32_t glslSize,
                                const uint8_t *spv, uint32_t spvSize
 #if BX_PLATFORM_WINDOWS
                                ,
-                               const uint8_t *dx11, uint32_t dx11Size
+                               const uint8_t *dxbc, uint32_t dxbcSize
 #elif BX_PLATFORM_OSX
                                ,
                                const uint8_t *mtl, uint32_t mtlSize
@@ -49,8 +49,8 @@ createShaderForCurrentRenderer(const uint8_t *glsl, uint32_t glslSize,
 #if BX_PLATFORM_WINDOWS
   case bgfx::RendererType::Direct3D11:
   case bgfx::RendererType::Direct3D12:
-    data = dx11;
-    size = dx11Size;
+    data = dxbc;
+    size = dxbcSize;
     break;
 #elif BX_PLATFORM_OSX
   case bgfx::RendererType::Metal:
@@ -72,7 +72,7 @@ bgfx::ProgramHandle createDefaultProgram() {
       sizeof(model_vs_essl), model_vs_spv, sizeof(model_vs_spv)
 #if BX_PLATFORM_WINDOWS
                                                ,
-      model_vs_dx11, sizeof(model_vs_dx11)
+      model_vs_dxbc, sizeof(model_vs_dxbc)
 #elif BX_PLATFORM_OSX
                                                ,
       model_vs_mtl, sizeof(model_vs_mtl)
@@ -83,7 +83,7 @@ bgfx::ProgramHandle createDefaultProgram() {
       sizeof(model_fs_essl), model_fs_spv, sizeof(model_fs_spv)
 #if BX_PLATFORM_WINDOWS
                                                ,
-      model_fs_dx11, sizeof(model_fs_dx11)
+      model_fs_dxbc, sizeof(model_fs_dxbc)
 #elif BX_PLATFORM_OSX
                                                ,
       model_fs_mtl, sizeof(model_fs_mtl)

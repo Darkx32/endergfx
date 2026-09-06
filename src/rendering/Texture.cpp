@@ -1,4 +1,5 @@
 #include "endergfx/Texture.hpp"
+#include "bgfx/bgfx.h"
 #include "endergfx/Log.hpp"
 
 #define STB_IMAGE_IMPLEMENTATION
@@ -43,6 +44,7 @@ Texture Texture::createSolidColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
 Texture::~Texture() {
   if (bgfx::isValid(this->m_handle)) {
     bgfx::destroy(this->m_handle);
+    this->m_handle = BGFX_INVALID_HANDLE;
   }
 }
 

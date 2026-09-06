@@ -8,9 +8,8 @@ namespace endergfx {
 
 namespace {
 
-const Material &defaultMaterial() {
-  static Material material;
-  return material;
+std::shared_ptr<Material> defaultMaterial() {
+  return std::make_shared<Material>();
 }
 
 bgfx::UniformHandle textureSampler() {
@@ -21,8 +20,8 @@ bgfx::UniformHandle textureSampler() {
 
 } // namespace
 
-Model::Model(const Mesh &mesh)
-    : m_mesh(mesh), m_material(&defaultMaterial()),
+Model::Model(std::shared_ptr<Mesh> mesh)
+    : m_mesh(mesh), m_material(defaultMaterial()),
       m_program(ShaderUtils::createDefaultProgram()), m_ownsProgram(true) {
   if (!bgfx::isValid(this->m_program)) {
     log(LogLevel::Error,
@@ -30,8 +29,8 @@ Model::Model(const Mesh &mesh)
   }
 }
 
-Model::Model(const Mesh &mesh, const Material &material)
-    : m_mesh(mesh), m_material(&material),
+Model::Model(std::shared_ptr<Mesh> mesh, std::shared_ptr<Material> material)
+    : m_mesh(mesh), m_material(std::move(material)),
       m_program(ShaderUtils::createDefaultProgram()), m_ownsProgram(true) {
   if (!bgfx::isValid(this->m_program)) {
     log(LogLevel::Error,
@@ -39,9 +38,9 @@ Model::Model(const Mesh &mesh, const Material &material)
   }
 }
 
-Model::Model(const Mesh &mesh, const Material &material,
+Model::Model(std::shared_ptr<Mesh> mesh, std::shared_ptr<Material> material,
              bgfx::ProgramHandle program)
-    : m_mesh(mesh), m_material(&material), m_program(program),
+    : m_mesh(mesh), m_material(std::move(material)), m_program(program),
       m_ownsProgram(false) {
   if (!bgfx::isValid(this->m_program)) {
     log(LogLevel::Error, "Model created with an invalid shader program");
@@ -74,7 +73,7 @@ void Model::draw(bgfx::ViewId view) const {
              this->m_position.y, this->m_position.z);
 
   bgfx::setTransform(mtx);
-  this->m_mesh.bind();
+  this->m_mesh->bind();
   bgfx::setTexture(0, textureSampler(), this->m_material->texture().handle());
   bgfx::setState(BGFX_STATE_DEFAULT);
   LightUniforms::applyActive(view);

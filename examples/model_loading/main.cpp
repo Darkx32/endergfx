@@ -23,7 +23,8 @@ int main() {
   if (meshes.empty()) {
     return 1;
   }
-  endergfx::Model model(meshes[0]);
+  auto meshPtr = std::make_shared<endergfx::Mesh>(std::move(meshes[0]));
+  endergfx::Model model(meshPtr);
 
   float angle = 0.0f;
 

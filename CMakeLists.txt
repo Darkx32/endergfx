@@ -17,10 +17,10 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 option(ENDERGFX_INSTALL "Install endergfx" ON)
 option(ENDERGFX_FETCH_SDL3 "Fetch SDL3 automatically" OFF)
-option(ENDERGFX_FETCH_BGFX "Fetch bgfx automatically" OFF)
+option(ENDERGFX_FETCH_BGFX "Fetch bgfx automatically" ON)
 option(ENDERGFX_FETCH_TINYOBJLOADER "Fetch tinyobjloader automatically" ON)
 option(ENDERGFX_BUILD_SHARED "Build endergfx as a shared library" OFF)
-option(ENDERGFX_BUILD_EXAMPLES "Build endergfx examples" OFF)
+option(ENDERGFX_BUILD_EXAMPLES "Build endergfx examples" ON)
 
 include(GNUInstallDirs)
 include(FetchContent)
